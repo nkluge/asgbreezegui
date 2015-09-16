@@ -41,11 +41,9 @@ public class BreezeGuiMainTest {
 	public void testGui() {
 		
 		String[] args = {
-			"-debug",
-//			"-o", "2",
+			"-o", "3",
 			"-mode", "gui",
-//			"../../src/test/resources/gcd.breeze"
-			"../../../data/benchmarks/samips/SAMIPS.breeze"
+			"../../src/test/resources/gcd.breeze"
 		};
 		
 		Assert.assertEquals("BreezeGui failed", 0, BreezeGuiMain.main2(args));
