@@ -34,8 +34,8 @@ public class HSViewReturn {
 	
 	public HSViewReturn(mxCell cell) {
 		this.cell = cell;
-		this.activeportmap = new HashMap<HSChannel, mxCell>();
-		this.passiveportmap = new HashMap<HSChannel, mxCell>();
+		this.activeportmap = new HashMap<>();
+		this.passiveportmap = new HashMap<>();
 	}
 	public void addActivePort(HSChannel chan, mxCell port) {
 		this.activeportmap.put(chan, port);
