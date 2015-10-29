@@ -96,10 +96,14 @@ public class BreezeGuiMain {
 				}
 				break;
 			case "png":
-				gmain.exportPng(options.getOutfile());
+				if(!gmain.exportPng(options.getOutfile())) {
+					return -1;
+				}
 				break;
 			case "svg":
-				gmain.exportSvg(options.getOutfile());
+				if(!gmain.exportSvg(options.getOutfile())) {
+					return -1;
+				}
 				break;
 			default:
 				logger.error("Unknown mode: " + options.getMode());
