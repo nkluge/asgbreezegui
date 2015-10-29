@@ -228,9 +228,8 @@ public class HSView {
 
 	private String getSymbol() {
 		String symbol = null;
-		HSComponentInst inst2 = null;
 		if(inst instanceof HSComponentInst) {
-			inst2 = (HSComponentInst)inst;
+			HSComponentInst inst2 = (HSComponentInst)inst;
 			if(inst2.getComp() != null) {
 				if(inst2.getComp().getSymbol() != null) {
 					symbol = inst2.getComp().getSymbol();
@@ -487,11 +486,11 @@ public class HSView {
 		StringBuilder newStyle = new StringBuilder();
 		for(String str : style.split(";")) {
 			if(str.startsWith("fillColor")) {
-				newStyle.append("fillColor=" + backcolor + ";");
+				newStyle.append("fillColor=").append(backcolor).append(";");
 			} else if(str.startsWith("fontColor")) {
-				newStyle.append("fontColor=" + fontcolor + ";");
+				newStyle.append("fontColor=").append(fontcolor).append(";");
 			} else {
-				newStyle.append(str + ";");
+				newStyle.append(str).append(";");
 			}
 		}
 		String newStyleStr = newStyle.substring(0, newStyle.length() - 1);

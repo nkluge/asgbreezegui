@@ -78,14 +78,8 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 			@Override
 			public boolean isCellMovable(Object cell) {
 				if(cell instanceof mxCell) {
-					mxCell cell2 = (mxCell)cell;
-					if(cell2.isEdge()) {
-						return false;
-					} else if(cell2.getParent() != getDefaultParent()) {
-						return false;
-					} else {
-						return true;
-					}
+					mxCell mxCell = (mxCell)cell;
+					return !mxCell.isEdge() && mxCell.getParent() == getDefaultParent();
 				}
 				return false;
 			}

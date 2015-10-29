@@ -50,7 +50,7 @@ public class BinaryOp {
 	private String constant;
 	
 	public BinaryOp(HSComponentType type) {
-		String str = ((String)type.getParamValue(ParameterType.operator)).replace("\"", "");;
+		String str = ((String)type.getParamValue(ParameterType.operator)).replace("\"", "");
 		if(str.equals("Add")) {
 			op = OpType.add;
 		} else if(str.equals("Subtract")) {
