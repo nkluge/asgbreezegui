@@ -43,7 +43,7 @@ public class BinaryOp {
 	*/
 	
 	private enum OpType {
-		add, sub, equals, notequals, lessthan, greaterthan, lessorequals, greaterorequals, and,	or,	xor, invert, dontknow
+		add, sub, equals, notEquals, lessThan, greaterThan, lessOrEquals, greaterOrEquals, and,	or,	xor, invert, unknown
 	}
 	
 	private OpType op;
@@ -51,33 +51,22 @@ public class BinaryOp {
 	
 	public BinaryOp(HSComponentType type) {
 		String str = ((String)type.getParamValue(ParameterType.operator)).replace("\"", "");
-		if(str.equals("Add")) {
-			op = OpType.add;
-		} else if(str.equals("Subtract")) {
-			op = OpType.sub;
-		} else if(str.equals("Equals")) {
-			op = OpType.equals;
-		} else if(str.equals("NotEquals")) {
-			op = OpType.notequals;
-		} else if(str.equals("LessThan")) {
-			op = OpType.lessthan;
-		} else if(str.equals("GreaterThan")) {
-			op = OpType.greaterthan;
-		} else if(str.equals("LessOrEquals")) {
-			op = OpType.lessorequals;
-		} else if(str.equals("GreaterOrEquals")) {
-			op = OpType.greaterorequals;
-		} else if(str.equals("And")) {
-			op = OpType.and;
-		} else if(str.equals("Or")) {
-			op = OpType.or;
-		} else if(str.equals("Xor")) {
-			op = OpType.xor;
-		} else if(str.equals("Invert")) {
-			op = OpType.invert;
-		} else {
-			op = OpType.dontknow;
-			logger.warn("Unknown OpType: " + str);
+		switch (str) {
+			case "Add":				op = OpType.add; break;
+			case "Subtract": 		op = OpType.sub; break;
+			case "Equals":			op = OpType.equals; break;
+			case "NotEquals":		op = OpType.notEquals; break;
+			case "LessThan":		op = OpType.lessThan; break;
+			case "GreaterThan":		op = OpType.greaterThan; break;
+			case "LessOrEquals":	op = OpType.lessOrEquals; break;
+			case "GreaterOrEquals":	op = OpType.greaterOrEquals; break;
+			case "And":				op = OpType.and; break;
+			case "Or":				op = OpType.or; break;
+			case "Xor":				op = OpType.xor; break;
+			case "Invert":			op = OpType.invert; break;
+			default: op = OpType.unknown;
+				logger.warn("Unknown OpType: " + str);
+				break;
 		}
 		
 		if(type.getParamValue(ParameterType.inputB_value) != null) {
@@ -96,15 +85,15 @@ public class BinaryOp {
 				return "-" + constant;
 			case equals:
 				return "==" + constant;
-			case notequals:
+			case notEquals:
 				return "!=" + constant;
-			case lessthan:
+			case lessThan:
 				return "<" + constant;
-			case greaterthan:
+			case greaterThan:
 				return ">" + constant;
-			case lessorequals:
+			case lessOrEquals:
 				return "<=" + constant;
-			case greaterorequals:
+			case greaterOrEquals:
 				return ">=" + constant;
 			case and:
 				return "and" + constant;
@@ -114,7 +103,7 @@ public class BinaryOp {
 				return "xor" + constant;
 			case invert:
 				return "!" + constant;
-			case dontknow:
+			case unknown:
 			default:
 				return "?";
 		}
