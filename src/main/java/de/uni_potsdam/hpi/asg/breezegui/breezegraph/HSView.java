@@ -80,15 +80,15 @@ public class HSView {
 	}
 
 	public HSView(ComponentInst inst, mxGraph graph) {
-		dataInViewMap = new HashMap<Integer, HSView>();
-		dataOutViewMap = new HashMap<Integer, HSView>();
-		controlInViewMap = new HashMap<Integer, HSView>();
-		controlOutViewMap = new HashMap<Integer, HSView>();
+		dataInViewMap = new HashMap<>();
+		dataOutViewMap = new HashMap<>();
+		controlInViewMap = new HashMap<>();
+		controlOutViewMap = new HashMap<>();
 
-		dataInChanMap = new HashMap<HSChannel, Integer>();
-		dataOutChanMap = new HashMap<HSChannel, Integer>();
-		controlInChanMap = new HashMap<HSChannel, Integer>();
-		controlOutChanMap = new HashMap<HSChannel, Integer>();
+		dataInChanMap = new HashMap<>();
+		dataOutChanMap = new HashMap<>();
+		controlInChanMap = new HashMap<>();
+		controlOutChanMap = new HashMap<>();
 
 		parent = null;
 		this.graph = graph;
@@ -162,8 +162,7 @@ public class HSView {
 
 	protected double getPos(int num) {
 		double offset = (num - 1.0) / 2.0;
-		double pos = (COMP_SIZE / 2.0) - (offset * PORT_DIST) - PORT_RADIUS;
-		return pos;
+		return (COMP_SIZE / 2.0) - (offset * PORT_DIST) - PORT_RADIUS;
 	}
 
 	public HSViewReturn getView() {
