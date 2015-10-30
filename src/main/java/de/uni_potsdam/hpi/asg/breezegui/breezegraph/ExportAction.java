@@ -59,7 +59,7 @@ public class ExportAction implements Action {
 			mxGraph graph = comp.getGraph();
 			DateFormat dfmt = new SimpleDateFormat("yy-MM-dd_HH-mm-ss" );
 			String filename = "snap_" + dfmt.format(new Date());
-			if(exportSvg(graph, new File(filename + ".svg"))) {
+			if(exportSvg(new File(filename + ".svg"), graph)) {
 				logger.info("SVG export successful");
 			} else {
 				logger.error("SVG export unsuccessful");
@@ -95,7 +95,7 @@ public class ExportAction implements Action {
 	public void addPropertyChangeListener(PropertyChangeListener arg0) {
 	}
 	
-    public boolean exportSvg(mxGraph graph, File file)
+    public boolean exportSvg(File file, mxGraph graph)
     {
     	mxSvgCanvas canvas = (mxSvgCanvas) mxCellRenderer.drawCells(graph, null, 1, null, 
 			new CanvasFactory() {

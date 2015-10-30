@@ -80,15 +80,15 @@ public class HSView {
 	}
 
 	public HSView(ComponentInst inst, mxGraph graph) {
-		dataInViewMap = new HashMap<Integer, HSView>();
-		dataOutViewMap = new HashMap<Integer, HSView>();
-		controlInViewMap = new HashMap<Integer, HSView>();
-		controlOutViewMap = new HashMap<Integer, HSView>();
+		dataInViewMap = new HashMap<>();
+		dataOutViewMap = new HashMap<>();
+		controlInViewMap = new HashMap<>();
+		controlOutViewMap = new HashMap<>();
 
-		dataInChanMap = new HashMap<HSChannel, Integer>();
-		dataOutChanMap = new HashMap<HSChannel, Integer>();
-		controlInChanMap = new HashMap<HSChannel, Integer>();
-		controlOutChanMap = new HashMap<HSChannel, Integer>();
+		dataInChanMap = new HashMap<>();
+		dataOutChanMap = new HashMap<>();
+		controlInChanMap = new HashMap<>();
+		controlOutChanMap = new HashMap<>();
 
 		parent = null;
 		this.graph = graph;
@@ -162,8 +162,7 @@ public class HSView {
 
 	protected double getPos(int num) {
 		double offset = (num - 1.0) / 2.0;
-		double pos = (COMP_SIZE / 2.0) - (offset * PORT_DIST) - PORT_RADIUS;
-		return pos;
+		return (COMP_SIZE / 2.0) - (offset * PORT_DIST) - PORT_RADIUS;
 	}
 
 	public HSViewReturn getView() {
@@ -228,9 +227,8 @@ public class HSView {
 
 	private String getSymbol() {
 		String symbol = null;
-		HSComponentInst inst2 = null;
 		if(inst instanceof HSComponentInst) {
-			inst2 = (HSComponentInst)inst;
+			HSComponentInst inst2 = (HSComponentInst)inst;
 			if(inst2.getComp() != null) {
 				if(inst2.getComp().getSymbol() != null) {
 					symbol = inst2.getComp().getSymbol();
@@ -487,11 +485,11 @@ public class HSView {
 		StringBuilder newStyle = new StringBuilder();
 		for(String str : style.split(";")) {
 			if(str.startsWith("fillColor")) {
-				newStyle.append("fillColor=" + backcolor + ";");
+				newStyle.append("fillColor=").append(backcolor).append(";");
 			} else if(str.startsWith("fontColor")) {
-				newStyle.append("fontColor=" + fontcolor + ";");
+				newStyle.append("fontColor=").append(fontcolor).append(";");
 			} else {
-				newStyle.append(str + ";");
+				newStyle.append(str).append(";");
 			}
 		}
 		String newStyleStr = newStyle.substring(0, newStyle.length() - 1);
