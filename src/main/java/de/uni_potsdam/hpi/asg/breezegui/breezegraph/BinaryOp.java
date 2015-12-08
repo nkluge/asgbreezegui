@@ -43,7 +43,7 @@ public class BinaryOp {
 	*/
 	
 	private enum OpType {
-		add, sub, equals, notEquals, lessThan, greaterThan, lessOrEquals, greaterOrEquals, and,	or,	xor, invert, unknown
+		add, sub, equals, notEquals, lessThan, greaterThan, lessOrEquals, greaterOrEquals, and,	or, xor, invert, negate, unknown
 	}
 	
 	private OpType op;
@@ -64,6 +64,7 @@ public class BinaryOp {
 			case "Or":				op = OpType.or; break;
 			case "Xor":				op = OpType.xor; break;
 			case "Invert":			op = OpType.invert; break;
+			case "Negate":			op = OpType.negate; break;
 			default: op = OpType.unknown;
 				logger.warn("Unknown OpType: " + str);
 				break;
@@ -102,7 +103,9 @@ public class BinaryOp {
 			case xor:
 				return "xor" + constant;
 			case invert:
-				return "!" + constant;
+				return "!";
+			case negate:
+				return "-";
 			case unknown:
 			default:
 				return "?";

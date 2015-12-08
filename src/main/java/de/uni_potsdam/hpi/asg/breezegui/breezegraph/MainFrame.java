@@ -140,7 +140,7 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	    	} else {
 	    		label += " (" + chan.getDatawidth() + ")";
 	    		style += "startArrow=none;endArrow=classic;endSize=11";
-	    		if(entry.getKey().getDatatype() == HSChannel.DataType.pull) {
+	    		if(chan.getDatatype() == HSChannel.DataType.pull) {
 	    			mxCell temp = activecell;
 	    			activecell = passivecell;
 	    			passivecell = temp;
