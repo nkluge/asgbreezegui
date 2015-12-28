@@ -47,7 +47,7 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 	private File outfile = new File(System.getProperty("user.dir") + File.separator + "out");
 	
 	@Argument(metaVar="Breezefile", required=true)
-	private File brezeefile;
+	private File breezefile;
 	
 	public int getOutputlevel() {
 		return outputlevel;
@@ -58,8 +58,8 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 	public boolean isDebug() {
 		return debug;
 	}
-	public File getBrezeefile() {
-		return brezeefile;
+	public File getBreezefile() {
+		return breezefile;
 	}
 	public String getMode() {
 		return mode;

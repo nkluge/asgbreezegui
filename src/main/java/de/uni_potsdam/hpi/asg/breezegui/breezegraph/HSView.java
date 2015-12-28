@@ -29,6 +29,7 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph;
 
+import de.uni_potsdam.hpi.asg.breezegui.container.BreezeOnlyGui;
 import de.uni_potsdam.hpi.asg.common.breeze.model.BreezeNetlistInst;
 import de.uni_potsdam.hpi.asg.common.breeze.model.ComponentInst;
 import de.uni_potsdam.hpi.asg.common.breeze.model.HSChannel;
@@ -501,7 +502,7 @@ public class HSView {
 	public void openSubBreezeWindow() {
 		if(inst instanceof BreezeNetlistInst) {
 			BreezeNetlistInst inst2 = (BreezeNetlistInst)inst;
-			GuiMain gmain = new GuiMain(inst2.getInstantiatedNetlist(), 1);
+			BreezeOnlyGui gmain = new BreezeOnlyGui(inst2.getInstantiatedNetlist(), 1);
 			gmain.show();
 		}
 	}

@@ -1,4 +1,4 @@
-package de.uni_potsdam.hpi.asg.breezegui.breezegraph;
+package de.uni_potsdam.hpi.asg.breezegui.container;
 
 /*
  * Copyright (C) 2012 - 2015 Norman Kluge
@@ -28,14 +28,15 @@ import javax.swing.JFrame;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
+import de.uni_potsdam.hpi.asg.breezegui.breezegraph.ExportAction;
 import de.uni_potsdam.hpi.asg.common.breeze.model.AbstractBreezeNetlist;
 
-public class GuiMain extends WindowAdapter {
-	private MainFrame frame;
+public class BreezeOnlyGui extends WindowAdapter {
+	private BreezeOnlyFrame frame;
 	private boolean closed;
 	
-	public GuiMain(AbstractBreezeNetlist list, int rootchan) {
-		frame = new MainFrame(list, this, rootchan);
+	public BreezeOnlyGui(AbstractBreezeNetlist list, int rootchan) {
+		frame = new BreezeOnlyFrame(list, this, rootchan);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		closed = true;
 	}

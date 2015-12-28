@@ -23,7 +23,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +31,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import com.mxgraph.model.mxCell;
@@ -43,7 +42,7 @@ import de.uni_potsdam.hpi.asg.common.breeze.model.AbstractBreezeNetlist;
 import de.uni_potsdam.hpi.asg.common.breeze.model.ComponentInst;
 import de.uni_potsdam.hpi.asg.common.breeze.model.HSChannel;
 
-public class MainFrame extends JFrame implements MouseWheelListener, MouseListener {
+public class BreezePanel extends JPanel implements MouseWheelListener, MouseListener {
 	private static final long serialVersionUID = -7423653526804246359L;
 	
 	private AbstractBreezeNetlist list;
@@ -54,8 +53,7 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	private Map<HSChannel, List<HSView>> chanMap;
 	private Map<Object, HSView> cellMap;
     
-	public MainFrame(AbstractBreezeNetlist list, WindowAdapter adapt, int rootchan) {
-		super("HS Viewer");
+	public BreezePanel(AbstractBreezeNetlist list, int rootchan) {
 		this.list = list;
 		viewMap = new HashMap<ComponentInst, HSView>();
 		chanMap = new HashMap<HSChannel, List<HSView>>();
@@ -69,7 +67,6 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 		graphComponent.getActionMap().put("save", new ExportAction());
 		defaultParent = graph.getDefaultParent();
 		graphComponent.getGraphHandler().setLivePreview(true);
-		this.addWindowListener(adapt);
 		init(rootchan);
 	}
 	
@@ -162,8 +159,6 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	    
 	    graph.getModel().endUpdate();
 	    
-	    getContentPane().add(graphComponent);
-	    	    
 	    graph.setCellsEditable(false);
 	    graph.setCellsMovable(true);
 	    graph.setCellsResizable(false);
@@ -172,6 +167,9 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	
 	public mxGraph getGraph() {
 		return graph;
+	}
+	public mxGraphComponent getGraphComponent() {
+		return graphComponent;
 	}
 
 	@Override

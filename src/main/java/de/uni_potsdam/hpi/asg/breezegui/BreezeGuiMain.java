@@ -23,8 +23,9 @@ import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
 
-import de.uni_potsdam.hpi.asg.breezegui.breezegraph.GuiMain;
+import de.uni_potsdam.hpi.asg.breezegui.container.BreezeOnlyGui;
 import de.uni_potsdam.hpi.asg.common.breeze.model.AbstractBreezeNetlist;
+import de.uni_potsdam.hpi.asg.common.breeze.model.BreezeNetlist;
 import de.uni_potsdam.hpi.asg.common.breeze.model.BreezeProject;
 import de.uni_potsdam.hpi.asg.common.io.LoggerHelper;
 import de.uni_potsdam.hpi.asg.common.io.WorkingdirGenerator;
@@ -65,8 +66,17 @@ public class BreezeGuiMain {
 	}
 
 	private static int execute() {
-		
-		BreezeProject proj = BreezeProject.create(options.getBrezeefile(), null, false, false);
+		if(BreezeNetlist.isBreezeFile(options.getBreezefile())) {
+			// Breeze mode
+			return executeBreezeMode();
+		} else {
+			// Editor mode
+			return 1;
+		}
+	}
+	
+	private static int executeBreezeMode() {
+		BreezeProject proj = BreezeProject.create(options.getBreezefile(), null, false, false);
 		if(proj == null) {
 			logger.error("Could not create Breeze project");
 			return -1;
@@ -81,7 +91,7 @@ public class BreezeGuiMain {
 			return -1;
 		}
 
-		GuiMain gmain = new GuiMain(netlist, 1);
+		BreezeOnlyGui gmain = new BreezeOnlyGui(netlist, 1);
 
 		switch(options.getMode()) {
 			case "gui":
@@ -105,8 +115,6 @@ public class BreezeGuiMain {
 				logger.error("Unknown mode: " + options.getMode());
 				return -1;
 		}
-
 		return 0;
-
 	}
 }
