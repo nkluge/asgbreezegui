@@ -99,6 +99,10 @@ if $cygwin; then
   [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
 
+# balsa path
+export BALSAHOME=$BASEDIR/tools/balsa
+export PATH=$PATH:$BASEDIR/tools/balsa/bin
+
 exec "$JAVACMD" $JAVA_OPTS @EXTRA_JVM_ARGUMENTS@ \
   -classpath "$CLASSPATH" \
   -Dapp.name="@APP_NAME@" \

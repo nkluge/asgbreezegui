@@ -23,17 +23,21 @@ import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
 
+import de.uni_potsdam.hpi.asg.breezegui.container.BalsaBreezeSplitGui;
 import de.uni_potsdam.hpi.asg.breezegui.container.BreezeOnlyGui;
 import de.uni_potsdam.hpi.asg.common.breeze.model.AbstractBreezeNetlist;
 import de.uni_potsdam.hpi.asg.common.breeze.model.BreezeNetlist;
 import de.uni_potsdam.hpi.asg.common.breeze.model.BreezeProject;
 import de.uni_potsdam.hpi.asg.common.io.LoggerHelper;
 import de.uni_potsdam.hpi.asg.common.io.WorkingdirGenerator;
+import de.uni_potsdam.hpi.asg.breezegui.io.BreezeGuiInvoker;
+import de.uni_potsdam.hpi.asg.breezegui.io.Config;
 
 public class BreezeGuiMain {
 
 	private static Logger						logger;
 	private static BreezeGuiCommandlineOptions	options;
+	public static Config config;
 
 	public static void main(String[] args) {
 		int status = main2(args);
@@ -50,7 +54,8 @@ public class BreezeGuiMain {
 				String version = BreezeGuiMain.class.getPackage().getImplementationVersion();
 				logger.info("ASGBreezeGui " + (version==null ? "Testmode" : "v" + version));
 				logger.debug("Args: " + Arrays.asList(args).toString());
-				WorkingdirGenerator.getInstance().create(null, null, "guitmp", null);
+				config = Config.readIn(options.getConfigfile());
+				WorkingdirGenerator.getInstance().create(null, config.workdir, "guitmp", BreezeGuiInvoker.getInstance());
 				status = execute();
 				WorkingdirGenerator.getInstance().delete();
 			}
@@ -71,10 +76,27 @@ public class BreezeGuiMain {
 			return executeBreezeMode();
 		} else {
 			// Editor mode
-			return 1;
+			return executeEditorMode();
 		}
 	}
 	
+	private static int executeEditorMode() {
+		
+		BalsaBreezeSplitGui gmain = new BalsaBreezeSplitGui(options.getBreezefile());
+		
+		gmain.show();
+		while(!gmain.isClosed()) {
+			try {
+				Thread.sleep(1000);
+			} catch(InterruptedException e) {
+				logger.error(e.getLocalizedMessage());
+				return -1;
+			}
+		}
+		
+		return 0;
+	}
+
 	private static int executeBreezeMode() {
 		BreezeProject proj = BreezeProject.create(options.getBreezefile(), null, false, false);
 		if(proj == null) {

@@ -46,6 +46,9 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 	@Option(name="-out", metaVar="<file>", usage="Outfile for png or svg operation mode. Default is out")
 	private File outfile = new File(System.getProperty("user.dir") + File.separator + "out");
 	
+	@Option(name="-cfg", metaVar="<configfile>", usage="Config file, default is breezeguiconfig.xml")
+	private File configfile = new File("breezeguiconfig.xml");
+		
 	@Argument(metaVar="Breezefile", required=true)
 	private File breezefile;
 	
@@ -66,5 +69,8 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 	}
 	public File getOutfile() {
 		return outfile;
+	}
+	public File getConfigfile() {
+		return configfile;
 	}
 }

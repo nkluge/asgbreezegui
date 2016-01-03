@@ -20,6 +20,10 @@ package de.uni_potsdam.hpi.asg.breezegui;
  */
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -27,6 +31,8 @@ import org.junit.Test;
 
 public class BreezeGuiMainTest {
 
+	private static String newbase;
+	
 	@BeforeClass
 	public static void setup() {
 		String oldbase = System.getProperty("basedir");
@@ -35,12 +41,21 @@ public class BreezeGuiMainTest {
 			oldbase = System.getProperty("user.dir");
 			System.setProperty("user.dir", oldbase + "/target/test-runs");
 		}
+		
+		String oldpath = System.getenv("PATH");
+		newbase = oldbase + "/target/asgbreezegui-1.0.0-SNAPSHOT-unix/asgbreezegui-1.0.0-SNAPSHOT";
+		System.setProperty("basedir", newbase);
+		Map<String, String> env = new HashMap<String, String>(System.getenv());
+		env.put("PATH", oldpath + ":" + newbase + "/tools/balsa/bin");
+		env.put("BALSAHOME", newbase + "/tools/balsa");
+		setEnv(env);
 	}
 	
 	@Test
 	public void testGui() {
 		
 		String[] args = {
+			"-cfg", newbase + "/config/breezeguiconfig.xml",
 			"-o", "3",
 			"-mode", "gui",
 			"../../src/test/resources/gcd.breeze"
@@ -63,5 +78,40 @@ public class BreezeGuiMainTest {
 		Assert.assertEquals("BreezeGui failed", 0, BreezeGuiMain.main2(args));
 		File f = new File(pngfile);
 		Assert.assertEquals("Pngfile not present", true, f.exists());
+	}
+	
+	//Source: http://stackoverflow.com/questions/318239/how-do-i-set-environment-variables-from-java
+	@SuppressWarnings("all")
+	protected static void setEnv(Map<String, String> newenv) {
+		try {
+			Class<?> processEnvironmentClass = Class.forName("java.lang.ProcessEnvironment");
+			Field theEnvironmentField = processEnvironmentClass.getDeclaredField("theEnvironment");
+			theEnvironmentField.setAccessible(true);
+			Map<String, String> env = (Map<String, String>) theEnvironmentField.get(null);
+			env.putAll(newenv);
+			Field theCaseInsensitiveEnvironmentField = processEnvironmentClass.getDeclaredField("theCaseInsensitiveEnvironment");
+			theCaseInsensitiveEnvironmentField.setAccessible(true);
+			Map<String, String> cienv = (Map<String, String>) theCaseInsensitiveEnvironmentField.get(null);
+			cienv.putAll(newenv);
+		} catch (NoSuchFieldException e) {
+			try {
+				Class[] classes = Collections.class.getDeclaredClasses();
+				Map<String, String> env = System.getenv();
+				for (Class cl : classes) {
+					if ("java.util.Collections$UnmodifiableMap".equals(cl.getName())) {
+						Field field = cl.getDeclaredField("m");
+						field.setAccessible(true);
+						Object obj = field.get(env);
+						Map<String, String> map = (Map<String, String>) obj;
+						map.clear();
+						map.putAll(newenv);
+					}
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 }

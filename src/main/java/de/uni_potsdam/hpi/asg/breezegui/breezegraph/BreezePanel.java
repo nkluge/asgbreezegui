@@ -53,7 +53,11 @@ public class BreezePanel extends JPanel implements MouseWheelListener, MouseList
 	private Map<HSChannel, List<HSView>> chanMap;
 	private Map<Object, HSView> cellMap;
     
-	public BreezePanel(AbstractBreezeNetlist list, int rootchan) {
+	public BreezePanel() {
+		
+	}
+	
+	public void setNetlist(AbstractBreezeNetlist list, int rootchan) {
 		this.list = list;
 		viewMap = new HashMap<ComponentInst, HSView>();
 		chanMap = new HashMap<HSChannel, List<HSView>>();
@@ -68,6 +72,7 @@ public class BreezePanel extends JPanel implements MouseWheelListener, MouseList
 		defaultParent = graph.getDefaultParent();
 		graphComponent.getGraphHandler().setLivePreview(true);
 		init(rootchan);
+		this.add(graphComponent);
 	}
 	
 	private mxGraph initMxGraph() {
@@ -168,10 +173,7 @@ public class BreezePanel extends JPanel implements MouseWheelListener, MouseList
 	public mxGraph getGraph() {
 		return graph;
 	}
-	public mxGraphComponent getGraphComponent() {
-		return graphComponent;
-	}
-
+	
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		double scale = graph.getView().getScale();

@@ -38,8 +38,9 @@ public class BreezeOnlyFrame extends JFrame{
 		super("HS Viewer");
 		
 		this.addWindowListener(adapt);
-		this.breezepanel = new BreezePanel(list, rootchan);
-		this.getContentPane().add(breezepanel.getGraphComponent());
+		this.breezepanel = new BreezePanel();
+		this.breezepanel.setNetlist(list, rootchan);
+		this.add(breezepanel);
 	}
 	
 	public mxGraph getGraph() {
