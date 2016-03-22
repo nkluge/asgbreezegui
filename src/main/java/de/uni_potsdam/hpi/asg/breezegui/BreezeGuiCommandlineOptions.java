@@ -33,16 +33,16 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 		String versionstr = "ASGbreezeGui " + (version==null ? "Testmode" : "v" + version);
 		return super.parseCmdLine(args, versionstr + "\nUsage: ASGbreezeGui [options] <breezefile>\nOptions:");
 	}
-	
+
 	@Option(name="-o", metaVar="<level>", usage="Outputlevel: 0:nothing\n1:errors\n[2:+warnings]\n3:+info")
 	private int outputlevel = 2;
 	@Option(name="-log", metaVar="<logfile>", usage="Define output Logfile, default is breezegui.log")
 	private File logfile = new File(System.getProperty("user.dir") + File.separator + "breezegui.log");
 	@Option(name="-debug")
 	private boolean debug = false;
-	
+
 	@Option(name="-mode", metaVar="<mode>", usage="Operationmode: [gui]:Show GUI\npng:Export png\nsvg:Export svg")
-	private String mode = "gui"; 
+	private String mode = "gui";
 	@Option(name="-out", metaVar="<file>", usage="Outfile for png or svg operation mode. Default is out")
 	private File outfile = new File(System.getProperty("user.dir") + File.separator + "out");
 	

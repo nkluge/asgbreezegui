@@ -39,7 +39,7 @@ public class GuiMain extends WindowAdapter {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		closed = true;
 	}
-	
+
 	public void show() {
 		closed = false;
 		frame.pack();
@@ -49,7 +49,7 @@ public class GuiMain extends WindowAdapter {
 	public boolean exportSvg(File file) {
 		mxGraph graph = frame.getGraph();
 		ExportAction a = new ExportAction();
-		return a.exportSvg(graph, file);
+		return a.exportSvg(file, graph);
 	}
 	public boolean exportPng(File file) {
 		mxGraph graph = frame.getGraph();

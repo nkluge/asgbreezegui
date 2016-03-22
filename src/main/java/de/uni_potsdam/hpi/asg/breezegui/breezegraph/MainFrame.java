@@ -57,8 +57,8 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	public MainFrame(AbstractBreezeNetlist list, WindowAdapter adapt, int rootchan) {
 		super("HS Viewer");
 		this.list = list;
-		viewMap = new HashMap<ComponentInst, HSView>();
-		chanMap = new HashMap<HSChannel, List<HSView>>();
+		viewMap = new HashMap<>();
+		chanMap = new HashMap<>();
 		cellMap = new HashMap<>();
 		
 		graph = initMxGraph();
@@ -78,14 +78,8 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 			@Override
 			public boolean isCellMovable(Object cell) {
 				if(cell instanceof mxCell) {
-					mxCell cell2 = (mxCell)cell;
-					if(cell2.isEdge()) {
-						return false;
-					} else if(cell2.getParent() != getDefaultParent()) {
-						return false;
-					} else {
-						return true;
-					}
+					mxCell mxCell = (mxCell)cell;
+					return !mxCell.isEdge() && mxCell.getParent() == getDefaultParent();
 				}
 				return false;
 			}
@@ -93,12 +87,12 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	}
 	
 	private void init(int rootchan) {
-	    Map<HSChannel, mxCell> activeportmap = new HashMap<HSChannel, mxCell>();
-	    Map<HSChannel, mxCell> passiveportmap = new HashMap<HSChannel, mxCell>();
+	    Map<HSChannel, mxCell> activeportmap = new HashMap<>();
+	    Map<HSChannel, mxCell> passiveportmap = new HashMap<>();
 	    
 	    HSView root = null;
 	    
-	    List<ComponentInst> list2 = new ArrayList<ComponentInst>();
+	    List<ComponentInst> list2 = new ArrayList<>();
 	    list2.addAll(list.getAllHSInstances());
 	    list2.addAll(list.getAllPorts());
 	    list2.addAll(list.getSubBreezeInst());
@@ -111,14 +105,14 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
     		activeportmap.putAll(ret.getActiveportmap());
     		passiveportmap.putAll(ret.getPassiveportmap());
     		
-    		Set<HSChannel> chans = new HashSet<HSChannel>(); 
+    		Set<HSChannel> chans = new HashSet<>();
     		chans.addAll(ret.getActiveportmap().keySet());
     		chans.addAll(ret.getPassiveportmap().keySet());
     		for(HSChannel chan : chans) {
     			if(chanMap.containsKey(chan)) {
     				chanMap.get(chan).add(view);
     			} else {
-    				List<HSView> temp = new ArrayList<HSView>();
+    				List<HSView> temp = new ArrayList<>();
     				temp.add(view);
     				chanMap.put(chan, temp);
     			}	    			
@@ -146,7 +140,7 @@ public class MainFrame extends JFrame implements MouseWheelListener, MouseListen
 	    	} else {
 	    		label += " (" + chan.getDatawidth() + ")";
 	    		style += "startArrow=none;endArrow=classic;endSize=11";
-	    		if(entry.getKey().getDatatype() == HSChannel.DataType.pull) {
+	    		if(chan.getDatatype() == HSChannel.DataType.pull) {
 	    			mxCell temp = activecell;
 	    			activecell = passivecell;
 	    			passivecell = temp;
