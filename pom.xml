@@ -32,6 +32,8 @@
 				<directory>.</directory>
 				<includes>
 					<include>LICENSE.txt</include>
+					<include>NOTICE.txt</include>
+					<include>README.md</include>
 				</includes>
 			</resource>
 			<resource>
