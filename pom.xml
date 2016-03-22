@@ -120,7 +120,7 @@
 							<programs>
 								<program>
 									<mainClass>de.uni_potsdam.hpi.asg.breezegui.BreezeGuiMain</mainClass>
-									<id>ASGBreezeGui</id>
+									<id>ASGbreezeGui</id>
 								</program>
 							</programs>
 							<repositoryLayout>flat</repositoryLayout>
@@ -178,7 +178,7 @@
 							<programs>
 								<program>
 									<mainClass>de.uni_potsdam.hpi.asg.breezegui.BreezeGuiMain</mainClass>
-									<id>ASGBreezeGui</id>
+									<id>ASGbreezeGui</id>
 								</program>
 							</programs>
 							<repositoryLayout>flat</repositoryLayout>

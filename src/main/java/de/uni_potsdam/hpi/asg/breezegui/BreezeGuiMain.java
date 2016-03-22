@@ -3,20 +3,20 @@ package de.uni_potsdam.hpi.asg.breezegui;
 /*
  * Copyright (C) 2015 Norman Kluge
  * 
- * This file is part of ASGBreezeGui.
+ * This file is part of ASGbreezeGui.
  * 
- * ASGBreezeGui is free software: you can redistribute it and/or modify
+ * ASGbreezeGui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * ASGBreezeGui is distributed in the hope that it will be useful,
+ * ASGbreezeGui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with ASGBreezeGui.  If not, see <http://www.gnu.org/licenses/>.
+ * along with ASGbreezeGui.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import java.util.Arrays;
@@ -47,7 +47,7 @@ public class BreezeGuiMain {
 			if(options.parseCmdLine(args)) {
 				logger = LoggerHelper.initLogger(options.getOutputlevel(), options.getLogfile(), options.isDebug());
 				String version = BreezeGuiMain.class.getPackage().getImplementationVersion();
-				logger.info("ASGBreezeGui " + (version==null ? "Testmode" : "v" + version));
+				logger.info("ASGbreezeGui " + (version==null ? "Testmode" : "v" + version));
 				logger.debug("Args: " + Arrays.asList(args).toString());
 				WorkingdirGenerator.getInstance().create(null, null, "guitmp", null);
 				status = execute();

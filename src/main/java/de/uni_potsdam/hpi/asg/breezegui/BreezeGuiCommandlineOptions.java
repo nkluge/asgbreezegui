@@ -3,20 +3,20 @@ package de.uni_potsdam.hpi.asg.breezegui;
 /*
  * Copyright (C) 2015 Norman Kluge
  * 
- * This file is part of ASGBreezeGui.
+ * This file is part of ASGbreezeGui.
  * 
- * ASGBreezeGui is free software: you can redistribute it and/or modify
+ * ASGbreezeGui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * ASGBreezeGui is distributed in the hope that it will be useful,
+ * ASGbreezeGui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with ASGBreezeGui.  If not, see <http://www.gnu.org/licenses/>.
+ * along with ASGbreezeGui.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import java.io.File;
@@ -30,8 +30,8 @@ public class BreezeGuiCommandlineOptions extends CommandlineOptions {
 	
 	public boolean parseCmdLine(String[] args) {
 		String version = BreezeGuiMain.class.getPackage().getImplementationVersion();
-		String versionstr = "ASGBreezeGui " + (version==null ? "Testmode" : "v" + version);
-		return super.parseCmdLine(args, versionstr + "\nUsage: ASGBreezeGui [options] <breezefile>\nOptions:");
+		String versionstr = "ASGbreezeGui " + (version==null ? "Testmode" : "v" + version);
+		return super.parseCmdLine(args, versionstr + "\nUsage: ASGbreezeGui [options] <breezefile>\nOptions:");
 	}
 	
 	@Option(name="-o", metaVar="<level>", usage="Outputlevel: 0:nothing\n1:errors\n[2:+warnings]\n3:+info")
