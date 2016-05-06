@@ -20,15 +20,22 @@ package de.uni_potsdam.hpi.asg.breezegui.container;
  */
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.KeyStroke;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -44,13 +51,16 @@ public class BalsaBreezeSplitFrame extends JFrame {
 
 	private static final long serialVersionUID = 4788036033920633439L;
 	
+	private RSyntaxTextArea textArea;
+	private BreezePanel breezepanel;
+
 	public BalsaBreezeSplitFrame(File codefile, WindowAdapter adapt) {
 		super("Balsa Editor");
-		
+
 		this.addWindowListener(adapt);
-		
+
 		// Breeze
-		BreezePanel breezepanel = new BreezePanel();
+		breezepanel = new BreezePanel();
 		try {
 			BreezeGuiInvoker.getInstance().invokeBalsaC(codefile.getCanonicalPath());
 		} catch(Exception e) {
@@ -63,28 +73,56 @@ public class BalsaBreezeSplitFrame extends JFrame {
 			netlist = n;
 		}
 		breezepanel.setNetlist(netlist, 1);
-		
+
 		// Balsa
-		JPanel cp = new JPanel(new BorderLayout());
-		RSyntaxTextArea textArea = new RSyntaxTextArea(20, 60);
+		JPanel balsapanel = new JPanel(new BorderLayout());
+		textArea = new RSyntaxTextArea(20, 60);
 		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 		textArea.setCodeFoldingEnabled(true);
-		
+
 		try {
 			FileReader reader = new FileReader(codefile.getCanonicalFile());
-	        BufferedReader br = new BufferedReader(reader);
-	        textArea.read( br, null );
+			BufferedReader br = new BufferedReader(reader);
+			textArea.read(br, null);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		RTextScrollPane sp = new RTextScrollPane(textArea);
-		cp.add(sp);
-		
+		balsapanel.add(sp);
+
 		// SplitPane
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, cp, breezepanel);
-		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, balsapanel, breezepanel);
+
 		this.getContentPane().add(splitPane);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		
+		textArea.getInputMap().put(KeyStroke.getKeyStroke(' ', InputEvent.CTRL_MASK), "ctrl_space");
+	    textArea.getActionMap().put("ctrl_space", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					BufferedWriter fileOut = new BufferedWriter(new FileWriter(WorkingdirGenerator.getInstance().getWorkingdir() + "tmp.balsa"));
+					textArea.write(fileOut);
+					
+					try {
+						BreezeGuiInvoker.getInstance().invokeBalsaC("tmp.balsa");
+					} catch(Exception e1) {
+						e1.printStackTrace();
+					}
+					File breezefile = new File(WorkingdirGenerator.getInstance().getWorkingdir() + "tmp.breeze");
+					BreezeProject proj = BreezeProject.create(breezefile, null, false, false);
+					AbstractBreezeNetlist netlist = null;
+					for(AbstractBreezeNetlist n : proj.getSortedNetlists()) {
+						netlist = n;
+					}
+					breezepanel.setNetlist(netlist, 1);
+					
+				} catch(IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }
